@@ -91,7 +91,7 @@ def resolve_team_name(user_input: str, lookup: dict[str, str]) -> str:
 @st.cache_data(ttl=10*60)  # cache slate for 10 minutes
 def get_torvik_daily_slate(date_yyyymmdd: str) -> tuple[pd.DataFrame, str]:
     url = f"https://barttorvik.com/schedule.php?conlimit=&date={date_yyyymmdd}&sort=time"
-    tables = pd.read_html(url)
+    tables = pd.read_html(url, flavor="bs4")
     df = tables[0].copy()
     df.columns = [str(c).strip() for c in df.columns]
 
